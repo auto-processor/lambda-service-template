@@ -3,4 +3,4 @@ MAINTAINER Karol Wójcik <karol.wojcik@tuta.io>
 
 ADD .holy-lambda/build/output.jar output.jar
 
-CMD java -jar output.jar "service-name.core.ExampleLambda"
+CMD java -jar output.jar "{{cookiecutter.name}}.core.{{cookiecutter.name}}"

@@ -11,7 +11,7 @@
   #?(:bb  (str "Hello world. Babashka is a sweet friend of mine! Babashka version: " (System/getProperty "babashka.version"))
      :clj "Hello world"))
 
-(defn ExampleLambda
+(defn {{ cookiecutter.name }}
   "I can run on Java, Babashka or Native runtime..."
   [{:keys [event ctx] :as request}]
 
@@ -19,7 +19,7 @@
   (hr/text (say-hello)))
 
 ;; Specify the Lambda's entry point as a static main function when generating a class file
-(h/entrypoint [#'ExampleLambda])
+(h/entrypoint [#'{{ cookiecutter.name }}])
 
 ;; Executes the body in a safe agent context for native configuration generation.
 ;; Useful when it's hard for agent payloads to cover all logic branches.
