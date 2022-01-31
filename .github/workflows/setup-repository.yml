@@ -25,7 +25,7 @@ jobs:
             https://api.github.com/repos/$GITHUB_REPOSITORY \
             | jq --exit-status '.is_template == false';
       - run: | 
-          curl -I -H "Authorization: token ${{ secrets.REPO_SETUP_TOKEN }}" https://api.github.com/repos/$GITHUB_REPOSITORY
+          curl -I -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/$GITHUB_REPOSITORY
       - uses: actions/checkout@v2
         with:
           # Comminting workflow files using the regular GITHUB_TOKEN will fail with 
