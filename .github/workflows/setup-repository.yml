@@ -8,7 +8,7 @@ jobs:
     name: Reinitialize repository
     runs-on: ubuntu-latest
     env:
-      REPO_SETUP_TOKEN: ${{ env.REPO_SETUP_TOKEN }}
+      REPO_SETUP_TOKEN: ${{ secrets.REPO_SETUP_TOKEN }}
     steps:
       - name: Do not run scaffolding on template repository
         shell: bash
