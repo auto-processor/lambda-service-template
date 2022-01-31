@@ -12,8 +12,10 @@ jobs:
       - name: Setup
         uses: aws-actions/configure-aws-credentials@v1
         with:
+          {% raw %}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          {% endraw %}
           aws-region: us-east-1
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
