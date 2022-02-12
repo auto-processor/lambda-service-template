@@ -1,7 +1,7 @@
 {:deps {org.clojure/clojure                         {:mvn/version "1.10.3"}
         com.github.clj-easy/graal-build-time        {:mvn/version "0.1.4"}
         io.github.FieryCod/holy-lambda              {:mvn/version "0.6.2"}
-        io.github.FieryCod/holy-lambda-ring-adapter {:local/root "../../"}
+        io.github.FieryCod/holy-lambda-ring-adapter {:mvn/version "0.1.1"}
         ring/ring                                   {:mvn/version "1.9.4"}
         metosin/muuntaja                            {:mvn/version "0.6.8"}
         metosin/malli                               {:mvn/version "0.6.2"}
