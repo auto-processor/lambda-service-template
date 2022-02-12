@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  {{ cookiecutter.name }} lambda stack using `holy-lambda` micro library
+  {{ cookiecutter.name }} basic lambda using `holy-lambda` micro library
 
 Parameters:
   Timeout:
@@ -10,41 +10,35 @@ Parameters:
   MemorySize:
     Type: Number
     Default: 2000
-  Entrypoint:
-    Type: String
-    Default: "{{ cookiecutter.name }}.core"
 
 Globals:
   Function:
     Timeout: !Ref Timeout
     MemorySize: !Ref MemorySize
-    Environment:
-      Variables:
-        HL_ENTRYPOINT: !Ref Entrypoint
 
 Resources:
-  ExampleLambdaFunction:
+  LambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: ExampleLambdaFunction
-      PackageType: Image
+      Runtime: provided.al2
+      Handler: {{ cookiecutter.name }}.lambda.HttpAPIProxyGateway
+      CodeUri: ./.holy-lambda/build/latest.zip
       Events:
         HelloEvent:
           Type: HttpApi
           Properties:
             ApiId: !Ref ServerlessHttpApi
-            Path: /
-            Method: GET
-    Metadata:
-      Dockerfile: Dockerfile
-      DockerContext: .
-      DockerTag: v1
+            Path: /{proxy+}
+            Method: ANY
 
-  ExampleHttpApi:
+  ServerlessHttpApi:
     Type: AWS::Serverless::HttpApi
+    DeletionPolicy: Retain
+    Properties:
+      StageName: Prod
 
 Outputs:
-  ExampleLambdaEndpoint:
-    Description: Endpoint for ExampleLambdaFunction
+  TestEndpoint:
+    Description: Test endpoint
     Value:
-      Fn::Sub: https://${ExampleHttpApi}.execute-api.${AWS::Region}.amazonaws.com
+      Fn::Sub: https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com

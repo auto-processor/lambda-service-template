@@ -1,4 +1,0 @@
-{:name "service-name.core.ExampleLambda",
- :request {:event {:pathParameters {:message "Hello world"}},
-           :ctx {}},
- :propagate true}

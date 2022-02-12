@@ -5,7 +5,7 @@ native-packaged.yaml
 invoke-envs.json
 fnative-envs.list
 envs.json
-envs.example.json
+envs.{{ cookiecutter.name }}.json
 native-template.yml
 *.zip
 bootstrap

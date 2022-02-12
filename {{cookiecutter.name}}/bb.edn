@@ -1,8 +1,9 @@
 {:deps {io.github.FieryCod/holy-lambda-babashka-tasks
         {:git/url   "https://github.com/FieryCod/holy-lambda"
          :deps/root "./modules/holy-lambda-babashka-tasks"
-         :sha       "2a69818f57112c62bb31f4fcc1a7b36f4dfd63ac"}
-        io.github.FieryCod/holy-lambda {:mvn/version "0.6.5"}}
+         :sha       "e6c47274a2bfc7576a9da0ccdbc079c1e83bee17"}
+        io.github.FieryCod/holy-lambda-ring-adapter {:local/root "../../"}
+        io.github.FieryCod/holy-lambda              {:mvn/version "0.6.3"}}
 
  ;; Minimal babashka version which should be used in conjuction with holy-lambda
  :min-bb-version "0.3.7"
@@ -27,7 +28,7 @@
                                 ;; You can always build your own GraalVM image with enterprise edition
                                 :image "ghcr.io/fierycod/holy-lambda-builder:amd64-java11-21.3.0"}
 
-                       :build {:compile-cmd  "clojure -X:uberjar"
+                       :build {:compile-cmd  "clojure -X:uberjar-lambda"
                                ;; Used when either :docker is nil or
                                ;; `HL_NO_DOCKER` environment variable is set to "true"
                                ;; Might be set via `GRAALVM_HOME` environment variable
@@ -36,7 +37,7 @@
                        :backend
                        {
                         ;; Babashka pods should be shipped using AWS Lambda Layer
-                        ;; Check this template https://github.com/aws-samples/aws-lambda-layers-aws-sam-examples/blob/master/aws-sdk-layer/template.yaml
+                        ;; Check this template https://github.com/aws-samples/aws-lambda-layers-aws-sam-{{ cookiecutter.name }}s/blob/master/aws-sdk-layer/template.yaml
                         ;; and official docs https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-layers.html
                         ;; CodeUri should be `.holy-lambda/pods`
                         ;; For now pods should be declared in `bb.edn`. See: https://github.com/babashka/babashka/issues/768#issuecomment-825016317
@@ -49,7 +50,7 @@
 
                         ;; For `:native` backend you can provide some native resources which will be available during lambda execution
                         ;; Resources are packed as is.
-                        :native-deps "resources"
+                        ;; :native-deps "resources"
 
                         ;; Specify custom arguments for native image generation
                         ;; Check https://www.graalvm.org/reference-manual/native-image/Options/
@@ -57,6 +58,8 @@
                                             "--no-fallback"
                                             "--report-unsupported-elements-at-runtime"
                                             "-H:+AllowIncompleteClasspath"
+                                            "-H:IncludeResources=public/.*"
+                                            "--initialize-at-build-time=javax.xml.datatype,jdk.xml.internal"
                                             "--no-server"]}}
 
  :tasks {:requires            ([holy-lambda.tasks])
