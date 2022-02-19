@@ -1,9 +1,7 @@
 {:deps {io.github.FieryCod/holy-lambda-babashka-tasks
-        {:git/url   "https://github.com/FieryCod/holy-lambda"
-         :deps/root "./modules/holy-lambda-babashka-tasks"
-         :sha       "e6c47274a2bfc7576a9da0ccdbc079c1e83bee17"}
+        {:git/url "https://github.com/FieryCod/holy-lambda", :sha "aad552d90f9b87929755a13641a8e73468430ba0", :deps/root "./modules/holy-lambda-babashka-tasks"}
         io.github.FieryCod/holy-lambda-ring-adapter {:mvn/version "0.1.1"}
-        io.github.FieryCod/holy-lambda              {:mvn/version "0.6.3"}}
+        io.github.FieryCod/holy-lambda              {:mvn/version "0.6.6"}}
 
  ;; Minimal babashka version which should be used in conjuction with holy-lambda
  :min-bb-version "0.3.7"
@@ -37,7 +35,7 @@
                        :backend
                        {
                         ;; Babashka pods should be shipped using AWS Lambda Layer
-                        ;; Check this template https://github.com/aws-samples/aws-lambda-layers-aws-sam-{{ cookiecutter.name }}s/blob/master/aws-sdk-layer/template.yaml
+                        ;; Check this template https://github.com/aws-samples/aws-lambda-layers-aws-sam-bffs/blob/master/aws-sdk-layer/template.yaml
                         ;; and official docs https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-layers.html
                         ;; CodeUri should be `.holy-lambda/pods`
                         ;; For now pods should be declared in `bb.edn`. See: https://github.com/babashka/babashka/issues/768#issuecomment-825016317
