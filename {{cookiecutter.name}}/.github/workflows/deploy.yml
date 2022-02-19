@@ -3,6 +3,25 @@ on:
   push:
     branches: [ main ]
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with: {% raw %}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Install Clojure and Babashka
+        run: brew install clojure/tools/clojure borkdude/brew/babashka
+      - name: Compile JAR
+        run: bb hl:compile
+      - name: Create native executable
+        run: bb hl:native:executable
+      - name: Upload to S3
+        run: "aws s3 cp ./.holy-lambda/build/latest.zip s3://lambdas-auto-processor/bff/bff-${{ github.run_number }}.zip"
+
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -12,7 +31,7 @@ jobs:
       - run: pip install boto3
       - name: Setup
         uses: aws-actions/configure-aws-credentials@v1
-        with: {% raw %}
+        with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
