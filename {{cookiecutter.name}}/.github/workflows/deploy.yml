@@ -38,6 +38,7 @@ jobs:
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
         env:
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} {% endraw %}
         with:
           playbook: services.yaml
