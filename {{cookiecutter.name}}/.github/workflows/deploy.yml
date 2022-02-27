@@ -21,7 +21,8 @@ jobs:
         run: bb hl:native:executable
       - name: Upload to S3
         run: "aws s3 cp ./.holy-lambda/build/latest.zip
-              s3://lambdas-auto-processor/{{cookiecutter.name}}/{{cookiecutter.name}}-${{ '{{' }} github.run_number {{ '{{' }}.zip"
+              s3://lambdas-auto-processor/{{cookiecutter.name}}/
+              {{cookiecutter.name}}-${{ '{{' }} github.run_number {{ '}}' }}.zip"
 
   deploy:
     runs-on: ubuntu-latest
